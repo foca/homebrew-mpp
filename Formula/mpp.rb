@@ -1,14 +1,16 @@
 class Mpp < Formula
-  url "https://github.com/foca/mpp/archive/v0.2.1.tar.gz"
-  sha256 "e79a8bf57f0b512173882e3aba638e10a248f58ebce6de48e198ed8b1cb3ae81"
+  version "1.0.0.rc3"
+  url "https://github.com/foca/mpp/archive/v#{version}.tar.gz"
+  sha256 "d6ed9c9ea2c29596f011895ada596c0330d7a38eeab1c39282652b57b9cc95ec"
 
   homepage "https://github.com/foca/mpp"
+  desc "mpp is a mini pre-processor"
 
-  depends_on "go" => :build
-  depends_on "gpm" => :build
+  depends_on "crystal-lang" => :build
 
   def install
     system "./configure", "--prefix=#{prefix}"
+    system "make"
     system "make", "install"
   end
 
