@@ -15,6 +15,20 @@ class Mpp < Formula
   end
 
   test do
-    system "mpp", "--version"
+    assert_match version.to_s, shell_output("mpp --version").to_s
+
+    (testpath/"root.css").write <<-EOS.undent
+      #include "variables.css"
+      strong { color: $highlight; }
+    EOS
+
+    (testpath/"variables.css").write <<-EOS.undent
+      #define $highlight "#f00"
+    EOS
+
+    command = "mpp -I#{testpath} root.css"
+    assert_equal <<-OUTPUT.undent, shell_output(command)
+      strong { color: "#f00"; }
+    OUTPUT
   end
 end
